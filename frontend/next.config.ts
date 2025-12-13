@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+const nextConfig: NextConfig = {
   rewrites: async () => {
     return [
       {
@@ -11,5 +12,6 @@ import type { NextConfig } from "next";
       },
     ];
   },
+};
 
 export default nextConfig;
