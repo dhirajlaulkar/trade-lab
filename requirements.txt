@@ -5,3 +5,5 @@ requests
 matplotlib
 pyyaml
 pydantic
+fastapi
+uvicorn
