@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { TrendingUp, Activity, BarChart3, Settings } from 'lucide-react';
 
 export default function Home() {
   const [symbol, setSymbol] = useState('SPY');
@@ -34,34 +35,51 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <header className="text-center">
-          <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            TradeLab Analytics
-          </h1>
-          <p className="text-gray-400 mt-2">Institutional-grade Backtesting Platform</p>
+    <div className="min-h-screen bg-[#f0f0f0] text-black font-mono p-8 relative">
+      <div className="max-w-5xl mx-auto space-y-12">
+        {/* Header */}
+        <header className="flex flex-col md:flex-row justify-between items-center border-b-4 border-black pb-6 gap-4">
+          <div>
+            <h1 className="text-5xl md:text-6xl font-black bg-yellow-300 border-2 border-black px-4 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] inline-block transform -rotate-1">
+              TradeLab
+            </h1>
+            <p className="mt-4 text-lg font-bold text-gray-700">
+              /// INSTITUTIONAL GRADE BACKTESTING
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <div className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer">
+              <Activity className="w-6 h-6" />
+            </div>
+            <div className="p-3 bg-blue-300 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer">
+              <Settings className="w-6 h-6" />
+            </div>
+          </div>
         </header>
 
         {/* Control Panel */}
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-          <form onSubmit={runBacktest} className="flex gap-4 flex-wrap items-end">
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-300">Symbol</label>
+        <div className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <h2 className="text-2xl font-black mb-6 flex items-center gap-2">
+            <BarChart3 className="w-8 h-8" /> CONFIGURATION
+          </h2>
+          <form onSubmit={runBacktest} className="flex gap-6 flex-wrap items-end">
+            <div className="flex-1 min-w-[200px]">
+              <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Ticker Symbol</label>
               <input
                 type="text"
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                className="bg-gray-900 border border-gray-600 rounded px-3 py-2 w-32 focus:ring-2 focus:ring-blue-500 outline-none uppercase"
+                className="w-full bg-gray-50 border-2 border-black px-4 py-3 font-bold focus:ring-0 focus:bg-yellow-100 focus:outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                placeholder="e.g. SPY"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-300">Strategy</label>
+            <div className="flex-1 min-w-[200px]">
+              <label className="block text-sm font-bold mb-2 uppercase tracking-wide">Strategy Model</label>
               <select
                 value={strategy}
                 onChange={(e) => setStrategy(e.target.value)}
-                className="bg-gray-900 border border-gray-600 rounded px-3 py-2 w-48 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full bg-gray-50 border-2 border-black px-4 py-3 font-bold focus:ring-0 focus:bg-yellow-100 focus:outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] appearance-none"
               >
                 <option value="momentum">Momentum (Crossover)</option>
                 <option value="mean_reversion">Mean Reversion (Z-Score)</option>
@@ -71,50 +89,65 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed h-[42px]"
+              className="bg-black text-white hover:bg-gray-800 px-8 py-3.5 border-2 border-black font-bold shadow-[4px_4px_0px_0px_rgba(128,128,128,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed h-[52px] min-w-[150px]"
             >
-              {loading ? 'Running...' : 'Run Backtest'}
+              {loading ? 'RUNNING...' : 'EXECUTE >>'}
             </button>
           </form>
-          {error && <p className="text-red-400 mt-4 text-sm">{error}</p>}
+          {error && (
+            <div className="mt-6 p-4 bg-red-100 border-2 border-black text-red-700 font-bold flex items-center gap-2">
+              <span>⚠️ ERROR:</span> {error}
+            </div>
+          )}
         </div>
 
         {/* Results */}
         {data && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-500">
             {/* Metrics Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {Object.entries(data.metrics).map(([key, value]) => (
-                <div key={key} className="bg-gray-800 p-4 rounded-lg border border-gray-700">
-                  <p className="text-xs text-gray-400 uppercase tracking-wider">{key}</p>
-                  <p className="text-xl font-bold mt-1">{String(value)}</p>
+                <div key={key} className="bg-purple-100 border-4 border-black p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform">
+                  <p className="text-xs font-black uppercase tracking-widest mb-2 border-b-2 border-black pb-1">{key}</p>
+                  <p className="text-2xl md:text-3xl font-bold mt-1 text-black">{String(value)}</p>
                 </div>
               ))}
             </div>
 
             {/* Chart */}
-            <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 h-[400px]">
-              <h3 className="text-lg font-medium mb-4">Equity Curve</h3>
+            <div className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] h-[500px] relative">
+              <div className="absolute -top-4 -left-4 bg-green-400 border-2 border-black px-4 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-10">
+                <h3 className="text-lg font-black flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5" /> EQUITY CURVE
+                </h3>
+              </div>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data.chart_data}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
                   <XAxis
                     dataKey="Date"
-                    stroke="#9CA3AF"
-                    tick={{ fontSize: 12 }}
+                    stroke="#000"
+                    tick={{ fontSize: 12, fontWeight: 'bold' }}
                     tickFormatter={(str) => new Date(str).toLocaleDateString()}
+                    tickMargin={10}
                   />
-                  <YAxis stroke="#9CA3AF" tick={{ fontSize: 12 }} />
+                  <YAxis stroke="#000" tick={{ fontSize: 12, fontWeight: 'bold' }} />
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
-                    itemStyle={{ color: '#fff' }}
+                    contentStyle={{
+                      backgroundColor: '#fff',
+                      border: '2px solid #000',
+                      boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
+                      fontWeight: 'bold'
+                    }}
+                    itemStyle={{ color: '#000' }}
                   />
                   <Line
                     type="monotone"
                     dataKey="Equity_Curve"
-                    stroke="#8B5CF6"
-                    strokeWidth={2}
+                    stroke="#000"
+                    strokeWidth={3}
                     dot={false}
+                    activeDot={{ r: 6, strokeWidth: 2, fill: '#fff', stroke: '#000' }}
                   />
                 </LineChart>
               </ResponsiveContainer>
