@@ -17,6 +17,7 @@ The system follows a strict separation of concerns:
 - **Vectorized Backtesting**: Chosen for performance on large datasets using Pandas.
 - **Config-Driven**: All parameters (windows, dates, capital) are in `config.yaml`.
 - **Type Hinting**: Used throughout for better developer experience and safety.
+- **Data Persistence (ETL Custom)**: The system supports saving raw key data to `data/raw` and cleaned data to `data/processed`. This follows standard ETL patterns to ensure reproducibility and auditability, allowing researchers to debug cleaning logic on static files.
 
 ## Setup Instructions
 1. Install dependencies:
