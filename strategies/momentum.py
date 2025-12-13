@@ -21,7 +21,4 @@ class MomentumStrategy(Strategy):
         # Short signal when Fast < Slow
         df.loc[df['SMA_Fast'] < df['SMA_Slow'], 'Signal'] = -1
         
-        # We generally do not want to be flipping constantly in chop, 
-        # but this is a pure moving average state strategy.
-        
         return df
