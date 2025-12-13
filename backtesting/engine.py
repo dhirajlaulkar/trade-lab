@@ -49,7 +49,7 @@ class BacktestEngine:
         df['Trades'] = df['Position'].diff().abs()
         df['Transaction_Cost'] = df['Trades'] * self.commission
         
-        df['Strategy_Return_Net'] = df['Strategy_Return'] - df['Transaction_Cost']
+        df['Strategy_Return_Net'] = (df['Strategy_Return'] - df['Transaction_Cost']).fillna(0)
         
         # Cumulative Returns
         df['Equity_Curve'] = (1 + df['Strategy_Return_Net']).cumprod() * self.initial_capital
