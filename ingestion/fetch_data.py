@@ -22,6 +22,8 @@ class YahooFinanceProvider(MarketDataProvider):
             # Ensure standard column names if needed, though yfinance is usually good.
             # yfinance returns 'Open', 'High', 'Low', 'Close', 'Volume'
             # We want to make sure it's clean.
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
             
             return df
         except Exception as e:
