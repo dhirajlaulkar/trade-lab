@@ -37,7 +37,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-4xl mx-auto space-y-8">
         <header className="text-center">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             TradeLab Analytics
           </h1>
           <p className="text-gray-400 mt-2">Institutional-grade Backtesting Platform</p>
