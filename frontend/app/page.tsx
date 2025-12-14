@@ -10,12 +10,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState('');
+  const [summary, setSummary] = useState('');
+  const [summaryLoading, setSummaryLoading] = useState(false);
 
   const runBacktest = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     setData(null);
+    setSummary('');
 
     try {
       const res = await fetch('/api/run_backtest', {
@@ -31,6 +34,29 @@ export default function Home() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const generateSummary = async () => {
+    if (!data) return;
+    setSummaryLoading(true);
+    try {
+      const res = await fetch('/api/ai_summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          metrics: data.metrics,
+          strategy: strategy,
+          symbol: symbol
+        }),
+      });
+      const resData = await res.json();
+      setSummary(resData.summary);
+    } catch (err) {
+      console.error(err);
+      setSummary('Failed to generate summary.');
+    } finally {
+      setSummaryLoading(false);
     }
   };
 
@@ -96,7 +122,7 @@ export default function Home() {
           </form>
           {error && (
             <div className="mt-6 p-4 bg-red-100 border-2 border-black text-red-700 font-bold flex items-center gap-2">
-              <span>⚠️ ERROR:</span> {error}
+              <span> ERROR:</span> {error}
             </div>
           )}
         </div>
@@ -151,6 +177,27 @@ export default function Home() {
                   />
                 </LineChart>
               </ResponsiveContainer>
+            </div>
+
+            {/* AI Summary Section */}
+            <div className="bg-yellow-100 border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-4xl font-black flex items-center gap-2">
+                  AI ANALYST
+                </h3>
+                <button
+                  onClick={generateSummary}
+                  disabled={summaryLoading}
+                  className="bg-black text-white px-4 py-2 font-bold border-2 border-transparent hover:bg-gray-800 disabled:opacity-50"
+                >
+                  {summaryLoading ? 'ANALYZING...' : 'GENERATE INSIGHTS'}
+                </button>
+              </div>
+              {summary && (
+                <div className="bg-white border-2 border-black p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap">
+                  {summary}
+                </div>
+              )}
             </div>
           </div>
         )}

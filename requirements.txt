@@ -7,3 +7,5 @@ pyyaml
 pydantic
 fastapi
 uvicorn
+groq
+python-dotenv

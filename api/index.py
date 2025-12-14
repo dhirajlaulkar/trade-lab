@@ -7,9 +7,18 @@ import json
 # Add project root to path so we can import modules
 sys.path.append(os.getcwd())
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from automation.runner import Runner
+from llm.summarize_results import generate_summary
 
 app = FastAPI()
+
+class SummaryRequest(BaseModel):
+    metrics: dict
+    strategy: str
+    symbol: str
 
 class BacktestRequest(BaseModel):
     symbol: str
@@ -20,6 +29,11 @@ class BacktestRequest(BaseModel):
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "version": "1.0.0"}
+
+@app.post("/api/ai_summary")
+def get_ai_summary(req: SummaryRequest):
+    summary = generate_summary(req.metrics, req.strategy, req.symbol)
+    return {"summary": summary}
 
 @app.post("/api/run_backtest")
 def run_backtest(req: BacktestRequest):

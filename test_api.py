@@ -29,6 +29,21 @@ def test_api():
                 print("API Success!")
                 print(f"Metrics: {data['metrics']}")
                 print(f"Chart Data Points: {len(data['chart_data'])}")
+                
+                # Test AI Summary
+                print("\nTesting AI Summary Endpoint...")
+                summary_payload = {
+                    "metrics": data['metrics'],
+                    "strategy": "momentum",
+                    "symbol": "SPY"
+                }
+                summary_res = requests.post("http://127.0.0.1:8000/api/ai_summary", json=summary_payload)
+                if summary_res.status_code == 200:
+                    print("AI Summary API Success!")
+                    print(f"Response: {summary_res.json()}")
+                else:
+                    print(f"AI Summary API Failed: {summary_res.status_code}")
+                    print(summary_res.text)
             else:
                 print(f"API Failed: {response.status_code}")
                 print(response.text)
