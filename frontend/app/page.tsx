@@ -72,14 +72,14 @@ export default function Home() {
               /// INSTITUTIONAL GRADE BACKTESTING
             </p>
           </div>
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <div className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer">
               <Activity className="w-6 h-6" />
             </div>
             <div className="p-3 bg-blue-300 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all cursor-pointer">
               <Settings className="w-6 h-6" />
             </div>
-          </div>
+          </div> */}
         </header>
 
         <div className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
