@@ -18,8 +18,8 @@ def test_api():
         payload = {
             "symbol": "SPY",
             "strategy": "momentum",
-            "start_date": "2023-01-01",
-            "end_date": "2023-06-01"
+            "start_date": "2020-01-01",
+            "end_date": "2023-01-01"
         }
         
         try:
