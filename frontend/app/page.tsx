@@ -63,7 +63,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f0f0f0] text-black font-mono p-8 relative">
       <div className="max-w-5xl mx-auto space-y-12">
-        {/* Header */}
         <header className="flex flex-col md:flex-row justify-between items-center border-b-4 border-black pb-6 gap-4">
           <div>
             <h1 className="text-5xl md:text-6xl font-black bg-yellow-300 border-2 border-black px-4 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] inline-block transform -rotate-1">
@@ -83,7 +82,6 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Control Panel */}
         <div className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
           <h2 className="text-2xl font-black mb-6 flex items-center gap-2">
             <BarChart3 className="w-8 h-8" /> CONFIGURATION
@@ -127,10 +125,8 @@ export default function Home() {
           )}
         </div>
 
-        {/* Results */}
         {data && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-500">
-            {/* Metrics Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {Object.entries(data.metrics).map(([key, value]) => (
                 <div key={key} className="bg-purple-100 border-4 border-black p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform">
@@ -140,7 +136,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Chart */}
             <div className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] h-[500px] relative">
               <div className="absolute -top-4 -left-4 bg-green-400 border-2 border-black px-4 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-10">
                 <h3 className="text-lg font-black flex items-center gap-2">
@@ -179,7 +174,6 @@ export default function Home() {
               </ResponsiveContainer>
             </div>
 
-            {/* AI Summary Section */}
             <div className="bg-yellow-100 border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-4xl font-black flex items-center gap-2">

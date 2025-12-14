@@ -3,7 +3,6 @@ import logging
 import sys
 import os
 
-# Ensure project root is in path
 sys.path.append(os.getcwd())
 
 from automation.runner import Runner
@@ -37,13 +36,11 @@ def main():
             print(f"{k}: {v}")
         print("="*40 + "\n")
         
-        # LLM Summary
         summary = generate_summary(metrics, args.strategy, args.symbol)
         print(summary)
         
     except Exception as e:
         logger.error(f"Execution failed: {e}")
-        # traceback for debugging
         import traceback
         traceback.print_exc()
 

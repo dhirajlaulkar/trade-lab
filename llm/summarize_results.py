@@ -2,9 +2,6 @@ import os
 from groq import Groq
 
 def generate_summary(metrics: dict, strategy_name: str, symbol: str) -> str:
-    """
-    Generates a human-readable summary of the backtest results using Groq API.
-    """
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         return "Error: GROQ_API_KEY environment variable not found. Please set it to enable AI summaries."

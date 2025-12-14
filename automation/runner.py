@@ -18,10 +18,6 @@ class Runner:
         self.market_provider = YahooFinanceProvider()
         
     def run(self, symbol: str, strategy_name: str, start_date: str = None, end_date: str = None):
-        """
-        Orchestrates the full pipeline.
-        """
-        # Load defaults from config if not provided
         if not start_date:
             start_date = self.config['data']['start_date']
         if not end_date:
@@ -33,19 +29,9 @@ class Runner:
             logger.error("No data found. Aborting.")
             return
             
-        # Save Raw Data - DISABLED
-        # raw_path = f"{self.config['data']['raw_path']}/{symbol}_raw.csv"
-        # raw_df.to_csv(raw_path)
-        # logger.info(f"Raw data saved to {raw_path}")
-            
         logger.info("Step 2: Processing Pipeline")
         cleaned_df = clean_data(raw_df)
         final_df = transform_data(cleaned_df)
-        
-        # Save Processed Data - DISABLED
-        # processed_path = f"{self.config['data']['processed_path']}/{symbol}_processed.csv"
-        # final_df.to_csv(processed_path)
-        # logger.info(f"Processed data saved to {processed_path}")
         
         logger.info(f"Step 3: Executing Strategy: {strategy_name}")
         strategy_config = self.config['strategies'].get(strategy_name, {})

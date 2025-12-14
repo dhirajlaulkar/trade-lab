@@ -6,9 +6,6 @@ from .market_api import MarketDataProvider
 logger = logging.getLogger(__name__)
 
 class YahooFinanceProvider(MarketDataProvider):
-    """
-    Implementation of MarketDataProvider using yfinance.
-    """
     
     def fetch_ohlcv(self, symbol: str, start_date: str, end_date: str) -> pd.DataFrame:
         logger.info(f"Fetching data for {symbol} from {start_date} to {end_date} via yfinance")
@@ -19,9 +16,6 @@ class YahooFinanceProvider(MarketDataProvider):
                 logger.warning(f"No data returned for {symbol}")
                 return pd.DataFrame()
             
-            # Ensure standard column names if needed, though yfinance is usually good.
-            # yfinance returns 'Open', 'High', 'Low', 'Close', 'Volume'
-            # We want to make sure it's clean.
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = df.columns.get_level_values(0)
             
